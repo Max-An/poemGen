@@ -1,0 +1,2 @@
+# poemGen
+Chinese poem generator

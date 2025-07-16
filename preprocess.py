@@ -1,3 +1,5 @@
+import os
+import sys
 import torch
 from torch.utils.data import Dataset
 from collections import Counter
@@ -9,6 +11,19 @@ PAD_IDX = 0
 UNK_IDX = 1
 BATCH_SIZE = 64
 MAX_LEN = 150
+
+def resourcePath(relative_path):
+
+    if hasattr(sys, '_MEIPASS'):
+
+        return os.path.join(sys._MEIPASS, relative_path)
+
+    return os.path.join(os.path.dirname(__file__), relative_path)
+ 
+DATA_DIR = resourcePath("poemGen")
+
+def getPath(filename): 
+    return os.path.join(DATA_DIR, filename)
 
 def importData(path):
     poems = []

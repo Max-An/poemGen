@@ -1,11 +1,10 @@
-import os
 from tqdm import tqdm
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader
 
 from model import CharLSTM
-from preprocess import importData, buildVocab, PoemDataset, collate, PAD_IDX
+from preprocess import importData, buildVocab, PoemDataset, collate, PAD_IDX, getPath
 
 def train():
     num_epochs = 999
@@ -18,9 +17,11 @@ def train():
 
     print(device)
 
-    poems = importData(os.path.join("poemGen", "poetry.txt"))
+    poem_path = getPath('poetry.txt')
 
-    model_path = os.path.join('poemGen', f'model{len(poems)}.pth')
+    poems = importData(poem_path)
+
+    model_path = getPath(f'model{len(poems)}.pth')
 
     vocab, char2idx, _ = buildVocab(poems)
 
@@ -65,7 +66,7 @@ def train():
         avg_loss = total_loss / len(dataloader)
 
         print(f"Epoch {epoch+1}/{num_epochs}, Loss: {avg_loss:.4f}")
-        with open(os.path.join("poemGen", "loss_log.txt"), "a", encoding="utf-8") as f:
+        with open(getPath("loss_log.txt"), "a", encoding="utf-8") as f:
             f.write(f"{epoch+1},{avg_loss:.4f}\n")
 
         print("Saving data...")

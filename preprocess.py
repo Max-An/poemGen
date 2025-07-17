@@ -19,8 +19,6 @@ def resourcePath(relative_path):
         return os.path.join(sys._MEIPASS, relative_path)
 
     return os.path.join(os.path.dirname(__file__), relative_path)
- 
-DATA_DIR = resourcePath("poemGen")
 
 def getPath(filename): 
     return os.path.join(DATA_DIR, filename)
@@ -38,6 +36,10 @@ def importData(path):
                 poem = line
             poems.append(poem)
     return poems
+ 
+DATA_DIR = resourcePath("")
+POEM_PATH = getPath('poetry.txt')
+DATASET_SIZE = len(importData(POEM_PATH))
 
 def buildVocab(poems):
     text = ''.join(poems)
@@ -49,22 +51,22 @@ def buildVocab(poems):
     return vocab, char2idx, idx2char
 
 class PoemDataset(Dataset):
-   def __init__(self, poems, char2idx):
-       self.char2idx = char2idx
-       self.unk_idx = char2idx[UNK_CHAR]
-       self.data = []
-       for poem in poems:
-           encoded = [char2idx.get(c, self.unk_idx) for c in poem]
-           if 2 <= len(encoded) <= MAX_LEN:
-               x = encoded[:-1]
-               y = encoded[1:]
-               self.data.append((x, y))
+    def __init__(self, poems, char2idx):
+        self.char2idx = char2idx
+        self.unk_idx = char2idx[UNK_CHAR]
+        self.data = []
+        for poem in poems:
+            encoded = [char2idx.get(c, self.unk_idx) for c in poem]
+            if 2 <= len(encoded) <= MAX_LEN:
+                x = encoded[:-1]
+                y = encoded[1:]
+                self.data.append((x, y))
 
-   def __len__(self):
-       return len(self.data)
-   
-   def __getitem__(self, idx):
-       return self.data[idx]
+    def __len__(self):
+        return len(self.data)
+    
+    def __getitem__(self, idx):
+        return self.data[idx]
  
 def collate(batch, pad_idx=0):
     xs, ys = zip(*batch)

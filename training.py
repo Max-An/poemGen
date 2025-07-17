@@ -7,7 +7,7 @@ from model import CharLSTM
 from preprocess import importData, buildVocab, PoemDataset, collate, PAD_IDX, getPath
 
 def train():
-    num_epochs = 999
+    num_epochs = 100
     embed_dim = 128
     hidden_dim = 256 
     num_layers = 2

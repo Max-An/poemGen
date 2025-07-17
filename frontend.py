@@ -3,7 +3,7 @@ import webview
 from pywebio.input import input, actions
 from pywebio.output import put_markdown, put_button, clear, put_scope, clear_scope
 from pywebio import start_server
-from generator import generate_text, generate_acrostic, get_model
+from generator import generate_poem, generate_acrostic, get_model
 
 def generate_poem(start_char, is_acrostic):
     model, char2idx, idx2char = get_model()
@@ -12,7 +12,7 @@ def generate_poem(start_char, is_acrostic):
     if is_acrostic:
         return generate_acrostic(model, char2idx, idx2char, start_char, device='cpu')
     else:
-        return generate_text(model, char2idx, idx2char, start_text=start_char, device='cpu')
+        return generate_poem(model, char2idx, idx2char, start_text=start_char, device='cpu')
    
 def poem_ui():
     while True:

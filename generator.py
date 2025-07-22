@@ -95,8 +95,6 @@ def generate_poem(model, char2idx, idx2char, start_text, lines=4, temperature=1.
     
     first_line_clean_len = clean_len(first_line)
 
-    print("First line is: " + first_line)
-
     if first_line_clean_len not in (5, 7):
         return "Failed to generate first line"
     
@@ -160,6 +158,7 @@ if __name__ == "__main__":
         result = generate_poem(model, char2idx, idx2char, start_text=i, temperature=0.8, device=device)
 
         print(result)
+        print('\n')
     
     print("\nGenerated Acrostic:\n")
     

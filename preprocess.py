@@ -4,6 +4,7 @@ import torch
 from torch.utils.data import Dataset
 from collections import Counter
 from torch.nn.utils.rnn import pad_sequence
+import pickle
 
 PAD_CHAR = "<PAD>"
 UNK_CHAR = "<UNK>"
@@ -75,3 +76,9 @@ def collate(batch, pad_idx=0):
     x_padded = pad_sequence(xs, batch_first=True, padding_value=pad_idx)
     y_padded = pad_sequence(ys, batch_first=True, padding_value=pad_idx)
     return x_padded, y_padded
+
+def __main__():
+    pass
+
+if __name__ == '__main__':
+    __main__()
